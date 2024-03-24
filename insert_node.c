@@ -4,10 +4,7 @@
 
 node *insert_node(node *front, char* id, double x, double y) {
 	
-	// TODO: create a node, copy in the parameter fields
-	// make sure that you do a deep copy
-
-	// TODO: link the new node into the chain 
+	// links the new node into the chain 
 	node *newNode = malloc(sizeof(node)); 	
 	if(newNode == NULL) {
 	       return NULL; 
