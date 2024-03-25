@@ -20,10 +20,11 @@ int main(int argc, char **argv) {
 	 
 	while((c = getopt(argc, argv, "st:")) != -1) { 
 		switch (c) { 
-		
+		// metadata case
 		case 's' : 
 			s_flag = 1; 
 			break; 
+		//case where hash table size is provided
 		case 't': 
 			tabsz = atof(optarg); 
 			if(tabsz < MIN_TAB_SZ) {
@@ -35,17 +36,15 @@ int main(int argc, char **argv) {
 		}
 	}
 //	printf("%d", s_flag); 
-
 	char *filename = argv[optind]; 
-	// TODO: initialze htable
+
 	// using calloc so all buckets are initialized to NULL
 	node **htable = calloc(tabsz, sizeof(node));
 	if (htable == NULL) {
 		return EXIT_FAILURE;
 	}
 	
-	// TODO: get filename and call load_table; 
-
+	// get filename and call load_table; 
 	if (load_table(htable, tabsz, filename) == -1) {
 		fprintf(stderr, "error in load_table\n");
 		free(htable);
@@ -56,13 +55,11 @@ int main(int argc, char **argv) {
 	char *buf = NULL; 
 	
 	// read one line at a time from stdin, do a lookup for that id
-	// 
 	int queries = 0; 
 	ssize_t bytes;
 	while ((bytes = getline(&buf, &bufsz, stdin)) > 0) {
 		// replace the \n, if it exists (for hashing)
 		if (buf[bytes - 1] == '\n') buf[bytes - 1] = '\0';
-		
 		
 		unsigned long index = hash(buf) % tabsz;
 
