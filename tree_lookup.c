@@ -60,11 +60,12 @@ int main(int argc, char **argv) {
 	while ((bytes = getline(&buf, &bufsz, stdin)) > 0) {
 		// replace the \n, if it exists (for hashing)
 		if (buf[bytes - 1] == '\n') buf[bytes - 1] = '\0';
-		
+
+		//retrieves hash given the ID from stdin
 		unsigned long index = hash(buf) % tabsz;
 
-		node *front = htable[index]; 
-		node *curr = node_lookup(front, buf); 
+		node *front = htable[index];  	// receives index of linked list within hash table
+		node *curr = node_lookup(front, buf);    //traverses through linked list to retrieve correct ID info
 
 		if(curr != NULL) { 
 			fprintf(stdout, QUERY_SUCCESS_FORMAT, buf, curr->xcoord, curr->ycoord);	
